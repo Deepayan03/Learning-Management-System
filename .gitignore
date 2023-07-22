@@ -1,0 +1,9 @@
+# Ignore Node.js specific files and directories
+node_modules/
+package-lock.json
+.env
+
+# Ignore logs and build output
+*.log
+build/
+dist/
