@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import morgan from "morgan"
 import dotenv from "dotenv"
 import userRoutes from "./routes/userRoutes.js";
+import errorMiddleWare from "./middlewares/ErrorMiddleware.js";
 const app=express();
 dotenv.config();
 app.use(express.json());
@@ -23,6 +24,8 @@ app.use("/ping",(req,res)=>{
     });
 })
 app.use("/project",userRoutes);
+
+app.use(errorMiddleWare);
 
 app.all("*",(req,res)=>{
     res.status(404).json({
