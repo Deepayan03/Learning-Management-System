@@ -1,9 +1,10 @@
 import { Router } from "express";
 import {register,login,logout,getProfile} from "../controllers/userControllers.js"
+import { isLoggedIn } from "../middlewares/AuthMiddleware.js";
 const controller=Router();
 
 controller.post("/register",register);
 controller.post("/login",login);
 controller.get("/logout",logout);
-controller.get("/getProfile",getProfile);
+controller.get("/getProfile",isLoggedIn,getProfile);
 export default controller;
