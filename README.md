@@ -1,7 +1,7 @@
 # Learning-Management-System
  Backend for an efficient and user-friendly platform for managing online courses. Create, enroll, and assess students easily. Seamless communication, progress tracking, and insightful analytics.
 ## Description
-    Welcome to our Learning Management System (LMS) project, currently in the works 🚧.
+    Welcome to my Learning Management System (LMS) project, currently in the works 🚧.
     The goal of this project is to provide a comprehensive platform for managing online courses and educational content.
     We are actively developing and refining the system to create a seamless learning experience.
 
