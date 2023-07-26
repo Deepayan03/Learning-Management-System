@@ -1,5 +1,7 @@
 import user from "../models/userModels.js";
 import AppError from "../utils/utilError.js"
+import cloudinary from "cloudinary"
+import fs from 'fs';
 const cookieOptions={
     maxAge:7*24*60*60*1000,
     httpOnly:true,
@@ -33,8 +35,28 @@ const register = async (req, res, next) => {
       if (!newUser) {
         return next(new AppError("User registration unsuccessful. Please try again", 400));
       }
-  
-      // File upload is left...
+      // File Upload
+      if(req.file){
+        try{
+          console.log(req.file.path);
+          const result=await cloudinary.v2.uploader.upload(req.file.path,{
+            folder:"lms",
+            width:250,
+            height:250,
+            gravity:"faces",
+            crop:"fill"
+          });
+          if(result){
+            console.log(result.secure_url);
+            newUser.avatar.public_id=result.public_id;
+            newUser.avatar.secure_url=result.secure_url;
+            fs.rmSync(req.file.path);
+            console.log("File uploaded successfully and also deleted from local Storage");
+          }
+        }catch(e){
+          return next(new AppError(e || "File not uploaded please try again",400));
+        }
+      }
   
       await newUser.save();
       newUser.password = undefined; // Set password to undefined to not send it in the response
@@ -53,7 +75,10 @@ const register = async (req, res, next) => {
   };
   const login = async (req, res, next) => {
     try {
-        const { email, password } = req.body;
+        // const {email,password} = req.body;
+        const email=req.body.email;
+        const password=req.body.password;
+        console.log(req.body);
         if (!email || !password) {
             return next(new AppError("All fields are required", 400));
         }
@@ -68,7 +93,8 @@ const register = async (req, res, next) => {
         res.cookie("token", token , cookieOptions);
         res.status(200).json({
             success: true,
-            message: "User Logged in Successfully"
+            message: "User Logged in Successfully",
+            data:User
         });
     } catch (error) {
         return next(new AppError(error.message, 500));
