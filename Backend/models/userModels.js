@@ -5,6 +5,7 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 
 const avatarSchema = new Schema({
   public_id: {
@@ -83,6 +84,13 @@ schema.methods = {
     confirmPassword: async function (pass) {
       return await bcrypt.compare(pass, this.password);
     },
+    generatePasswordResetToken: async function(){
+      const resetToken=crypto.randomBytes(20).toString("hex");
+
+      this.forgotPasswordToken = crypto.createHash("sha512").update(resetToken).digest("hex");
+      this.forgotPasswordExpiry=Date.now()+15*60*1000; //15 mins from the time of generation
+      return resetToken;
+    }
   };
 const user = model("LmsUsers", schema);
 export default user;

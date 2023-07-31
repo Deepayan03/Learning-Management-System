@@ -1,4 +1,5 @@
 import user from "../models/userModels.js";
+import sendEmail from "../utils/sendEmail.js";
 import AppError from "../utils/utilError.js"
 import cloudinary from "cloudinary"
 import fs from 'fs';
@@ -125,4 +126,36 @@ const getProfile = async (req, res, next) => {
     }
 }
 
-export {register,login,logout,getProfile};
+const forgotPassword= async(req,res,next)=>{
+  const {email}=req.body;
+  if(!email){
+    return next(new AppError("Fields cannot be empty",500));
+  }
+  const emailExists=await user.findOne({email});
+  if(!emailExists){
+    return next(new AppError("Email does not exist",500));
+  }
+  const resetToken=emailExists.generatePasswordResetToken();
+  await emailExists.save();
+  const resetPasswordURL=`${process.env.FrontEndURL}/resetPassword/${resetToken}`;
+  const subject="reset password"
+  const message=`You can reset your password by clicking <a href=${resetPasswordURL} target="_blank">Reset your password</a>\nIf the above link does not work for some reason then copy paste this link in new tab ${resetPasswordURL}.\n If you have not requested this, kindly ignore.`
+  try{
+    await sendEmail(email,subject,message);
+    res.status(400).json({
+      success:true,
+      message:"Reset password link has been successfully"
+    });
+  }
+  catch(e){
+    user.forgotPasswordExpiry=undefined;
+    user.forgotPasswordToken=undefined;
+    await emailExists.save();
+    return next(new AppError(e.message,500));
+  }
+}
+
+const resetPassword= async(req,res,next)=>{
+  
+}
+export {register,login,logout,getProfile,forgotPassword,resetPassword};
