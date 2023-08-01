@@ -2,6 +2,7 @@ import user from "../models/userModels.js";
 import sendEmail from "../utils/sendEmail.js";
 import AppError from "../utils/utilError.js"
 import cloudinary from "cloudinary"
+import crypto from "crypto";
 import fs from 'fs';
 const cookieOptions={
     maxAge:7*24*60*60*1000,
@@ -135,11 +136,11 @@ const forgotPassword= async(req,res,next)=>{
   if(!emailExists){
     return next(new AppError("Email does not exist",500));
   }
-  const resetToken=emailExists.generatePasswordResetToken();
+  const resetToken = await emailExists.generatePasswordResetToken();
   await emailExists.save();
   const resetPasswordURL=`${process.env.FrontEndURL}/resetPassword/${resetToken}`;
   const subject="reset password"
-  const message=`You can reset your password by clicking <a href=${resetPasswordURL} target="_blank">Reset your password</a>\nIf the above link does not work for some reason then copy paste this link in new tab ${resetPasswordURL}.\n If you have not requested this, kindly ignore.`
+  const message=`You can reset your password by clicking <a href=${resetPasswordURL} target="_blank">Reset your password</a>\nIf the above link does not work for some reason then copy paste this link in new tab${resetPasswordURL}.\n If you have not requested this, kindly ignore.`
   try{
     await sendEmail(email,subject,message);
     res.status(400).json({
@@ -156,6 +157,94 @@ const forgotPassword= async(req,res,next)=>{
 }
 
 const resetPassword= async(req,res,next)=>{
-  
+  const {resetToken}=req.params;
+  const {password}=req.body;
+  console.log(resetToken,password);
+  const forgotPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+  const checkUser=await user.findOne({
+    forgotPasswordToken,
+    forgotPasswordExpiry:{$gt: Date.now()}
+  });
+  if(!checkUser){
+    return next(new AppError("Token is invalid ,please try again ",400));
+  }
+  checkUser.password=password;
+  checkUser.forgotPasswordToken=undefined;
+  checkUser.forgotPasswordExpiry=undefined;
+  await checkUser.save();
+
+  res.status(200).json({
+    success:true,
+    message:"Your password has been changed successfully"
+  });
 }
-export {register,login,logout,getProfile,forgotPassword,resetPassword};
+
+const changePassword=async(req,res,next)=>{
+  const {oldPassword,newPassword}=req.body;
+  const {id}=req.user;
+  console.log(oldPassword,newPassword);
+  if(!oldPassword || !newPassword){
+    return next(new AppError("All fields are mandatory",400));
+  }
+  const UserExists=await user.findById(id).select("+password");
+  if(!UserExists){
+    return next(new AppError("User doesnot exist",400));
+  }
+  const isValid=await UserExists.confirmPassword(oldPassword);
+  if(!isValid){
+    return next(new AppError("Invalid old password",400));
+  }
+  UserExists.password=newPassword;
+  await UserExists.save();
+  UserExists.password=undefined;
+  res.status(200).json({
+    success:true,
+    message:"Password changed successfully"
+  })
+
+}
+const updateUser=async(req,res,next)=>{
+  const {fullName}=req.body;
+  const {id}=req.user;
+  const UserExists=await user.findById(id);
+  if(!UserExists){
+    return next(new AppError("User not found",400));
+  }
+  if (req.body.fullName) {
+    UserExists.fullName = fullName;
+  }
+  console.log(UserExists);
+  if(req.file){
+    await cloudinary.v2.uploader.destroy(UserExists.avatar.public_id);
+  }
+  if(req.file){
+  try{
+    console.log(req.file.path);
+    const result=await cloudinary.v2.uploader.upload(req.file.path,{
+      folder:"lms",
+      width:250,
+      height:250,
+      gravity:"faces",
+      crop:"fill"
+    });
+    if(result){
+      console.log(result.secure_url);
+      newUser.avatar.public_id=result.public_id;
+      newUser.avatar.secure_url=result.secure_url;
+      fs.rmSync(req.file.path);
+      console.log("File uploaded successfully and also deleted from local Storage");
+    }
+  }catch(e){
+    return next(new AppError(e || "File not uploaded please try again",400));
+  }
+}
+
+  await UserExists.save();
+  res.status(200).json({
+    success:true,
+    message:"Profile update successful"
+  });
+
+}
+
+export {register,login,logout,getProfile,forgotPassword,resetPassword,changePassword,updateUser};

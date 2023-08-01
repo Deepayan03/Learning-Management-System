@@ -86,9 +86,10 @@ schema.methods = {
     },
     generatePasswordResetToken: async function(){
       const resetToken=crypto.randomBytes(20).toString("hex");
-
-      this.forgotPasswordToken = crypto.createHash("sha512").update(resetToken).digest("hex");
+      this.forgotPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+      console.log(this.forgotPasswordToken);
       this.forgotPasswordExpiry=Date.now()+15*60*1000; //15 mins from the time of generation
+      console.log(resetToken);
       return resetToken;
     }
   };
