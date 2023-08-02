@@ -138,7 +138,7 @@ const forgotPassword= async(req,res,next)=>{
   }
   const resetToken = await emailExists.generatePasswordResetToken();
   await emailExists.save();
-  const resetPasswordURL=`${process.env.FrontEndURL}/resetPassword/${resetToken}`;
+  const resetPasswordURL=`${process.env.FrontEndURL}/user/resetPassword/${resetToken}`;
   const subject="reset password"
   const message=`You can reset your password by clicking <a href=${resetPasswordURL} target="_blank">Reset your password</a>\nIf the above link does not work for some reason then copy paste this link in new tab${resetPasswordURL}.\n If you have not requested this, kindly ignore.`
   try{
