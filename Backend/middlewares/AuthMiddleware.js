@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import AppError from "../utils/utilError.js";
 
 const isLoggedIn = async (req, res, next) => {
-    const token = req.query.token // Access token from cookies
+    const {token} = req.headers // Access token from cookies
      console.log(token);
     if (!token) {
         return next(new AppError("Unauthenticated", 400));

@@ -3,7 +3,7 @@ import {register,login,logout,getProfile,forgotPassword,resetPassword, changePas
 import { isLoggedIn } from "../middlewares/AuthMiddleware.js";
 import upload from "../middlewares/multerMiddleware.js";
 const controller=Router();
-
+// Defining user routes
 controller.post("/register",upload.single("avatar"),register);
 controller.post("/login",login);
 controller.get("/logout",logout);

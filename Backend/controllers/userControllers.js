@@ -93,6 +93,7 @@ const register = async (req, res, next) => {
         const token = await User.generateJWTToken();
         console.log(token);
         res.cookie("token", token , cookieOptions);
+        User.password=undefined;
         res.status(200).json({
             success: true,
             message: "User Logged in Successfully",
@@ -244,7 +245,6 @@ const updateUser=async(req,res,next)=>{
     success:true,
     message:"Profile update successful"
   });
-
 }
 
 export {register,login,logout,getProfile,forgotPassword,resetPassword,changePassword,updateUser};
