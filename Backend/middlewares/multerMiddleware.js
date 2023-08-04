@@ -6,16 +6,16 @@ const destinationDirectory = 'uploads/';
 
 // Define the file filter to accept only images
 const imageFilter = (req, file, cb) => {
-  const filetypes = /jpeg|jpg|png|gif/;
+  const filetypes = /jpeg|jpg|png|gif|mp4/; // Add "mp4" to allow video files
   const mimetype = filetypes.test(file.mimetype);
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
   if (mimetype && extname) {
     return cb(null, true);
   }
-  cb('Error: Only image files (jpeg, jpg, png, gif) are allowed!');
+  cb('Error: Only image files (jpeg, jpg, png, gif) and video files (mp4) are allowed!');
 };
 
-// Configure the multer storage and filename options
+// Configure the multer storage and filename options 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, destinationDirectory);

@@ -108,10 +108,55 @@ const removeCourse=async(req,res,next)=>{
         return next(new AppError(error.message,400));
     }
 }
+
+// Note: Images more than 1 mb and videos more than 10mb cannot be uploaded because the free tier of cloudinary is being used here
+const addLectureToCourseById=async(req,res,next)=>{
+    console.log(req.headers['content-type']);
+    const {title,description}=req.body;
+    const {id}=req.params;
+    const course=await Course.findById(id);
+    if(!title || !description){
+        return next(new AppError("All fields are required",500));
+    }
+    if(!course){
+        return next(new AppError("Enter the proper id",500));
+    }
+    const lectureData={
+        title,
+        description,
+        lecture:{}
+    };
+    if(req.file){
+        try {
+            const result=await cloudinary.uploader.upload(req.file.path,{
+                folder:"lms",
+                resource_type: "auto"
+            });
+            if(result){
+                lectureData.lecture.public_id=result.public_id;
+                lectureData.lecture.secure_url=result.secure_url;
+            }
+            fs.rm(`uploads/${req.file.filename}`);
+        } catch (error) {
+            return next(new AppError(error.message,400));
+        }
+    }
+    console.log(lectureData);
+    course.lectures.push(lectureData);
+    course.numberOfLectures=course.lectures.length;
+    await course.save();
+    res.status(200).json({
+        success:true,
+        message:"Lectures added successfully",
+        data:course.lectures[course.lectures.length-1]
+    });
+}
+
 export{
     getAllCourses,
     getLecturesByCourseid,
     createCourse,
     updateCourse,
-    removeCourse
+    removeCourse,
+    addLectureToCourseById
 };
