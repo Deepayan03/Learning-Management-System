@@ -1,7 +1,3 @@
-// Changes:
-// 1. Set the `generateJWTToken` expiration using `expiresIn` option.
-// 2. Update the `confirmPassword` method with correct `await` keyword.
-
 import { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -49,6 +45,10 @@ const schema = new Schema({
   },
   forgotPasswordToken: String,
   forgotPasswordExpiry: Date,
+  subscription:{
+    id: String,
+    status:String
+  }
 }, {
   timestamps: true,
 });

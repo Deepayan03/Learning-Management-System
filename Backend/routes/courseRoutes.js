@@ -1,5 +1,5 @@
 import {Router} from "express";
-import { addLectureToCourseById, createCourse, getAllCourses, getLecturesByCourseid, removeCourse, updateCourse } from "../controllers/courseControllers.js";
+import { addLectureToCourseById, createCourse, deleteLecturebyid, getAllCourses, getLecturesByCourseid, removeCourse, updateCourse } from "../controllers/courseControllers.js";
 import { isLoggedIn } from "../middlewares/AuthMiddleware.js";
 import upload from "../middlewares/multerMiddleware.js";
 import { authorizedRoles } from "../middlewares/RoleAuthorization.js";
@@ -8,6 +8,9 @@ router.route("/").get(getAllCourses).post(isLoggedIn,authorizedRoles("ADMIN"),up
 router.route("/:id").get(isLoggedIn,getLecturesByCourseid)
 .put(isLoggedIn,authorizedRoles("ADMIN"),updateCourse)
 .delete(isLoggedIn,authorizedRoles("ADMIN"),removeCourse)
-.post(isLoggedIn,authorizedRoles("ADMIN"),upload.single("lecture"),addLectureToCourseById);
+.post(isLoggedIn,authorizedRoles("ADMIN"),upload.single("lecture"),addLectureToCourseById)
+
+
+router.route("/:id/:lectureId").purge(isLoggedIn,authorizedRoles("ADMIN"),deleteLecturebyid);
 //Controllers will be determined based on the method of the request on the same route
 export default router;

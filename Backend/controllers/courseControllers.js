@@ -1,3 +1,4 @@
+import { json } from "express";
 import Course from "../models/courseModels.js"
 import AppError from "../utils/utilError.js";
 import {v2 as cloudinary} from "cloudinary";
@@ -111,7 +112,7 @@ const removeCourse=async(req,res,next)=>{
 
 // Note: Images more than 1 mb and videos more than 10mb cannot be uploaded because the free tier of cloudinary is being used here
 const addLectureToCourseById=async(req,res,next)=>{
-    console.log(req.headers['content-type']);
+    // console.log(req.headers['content-type']);
     const {title,description}=req.body;
     const {id}=req.params;
     const course=await Course.findById(id);
@@ -152,11 +153,41 @@ const addLectureToCourseById=async(req,res,next)=>{
     });
 }
 
+const deleteLecturebyid = async (req, res, next) => {
+    const { id, lectureId } = req.params;
+    console.log(lectureId);
+    const course = await Course.findById(id);
+    if (!course) {
+      return next(new AppError("Course does not exist", 500));
+    }
+    
+    // Use findIndex to get the index of the lecture in the array
+    const lectureIndex = course.lectures.findIndex((lecture) => lecture._id.toString() === lectureId);
+    console.log(lectureIndex);
+  
+    if (lectureIndex === -1) {
+      return next(new AppError("Wrong lecture id", 400));
+    }
+  
+    // Remove the lecture from the lectures array using splice
+    const deletedLecture = course.lectures.splice(lectureIndex, 1)[0];
+  
+    // Save the updated course
+    await course.save();
+  
+    res.status(200).json({
+      success: true,
+      message: "Lecture deleted successfully",
+      data: deletedLecture, // Return the deleted lecture in the response
+    });
+  };
+
 export{
     getAllCourses,
     getLecturesByCourseid,
     createCourse,
     updateCourse,
     removeCourse,
-    addLectureToCourseById
+    addLectureToCourseById,
+    deleteLecturebyid
 };

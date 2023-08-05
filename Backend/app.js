@@ -6,6 +6,7 @@ import dotenv from "dotenv"
 import userRoutes from "./routes/userRoutes.js";
 import errorMiddleWare from "./middlewares/ErrorMiddleware.js";
 import courseRoutes from "./routes/courseRoutes.js"
+import paymentRoutes from "./routes/paymentRoutes.js"
 const app=express();
 dotenv.config();
 // express.json() parses the every form of data to json data
@@ -35,6 +36,7 @@ app.use(morgan("dev"));
 app.use("/user",userRoutes);
 // If someone hits the /courses route they will be redirected to the courseRoutes
 app.use("/courses",courseRoutes);
+app.use("/payments",paymentRoutes)
 // Defined a custom middleware for throwing error
 app.use(errorMiddleWare);
 // If someone hits on the same port but wrong url then this error will be thrown 
