@@ -3,9 +3,10 @@ import { addLectureToCourseById, createCourse, deleteLecturebyid, getAllCourses,
 import { isLoggedIn } from "../middlewares/AuthMiddleware.js";
 import upload from "../middlewares/multerMiddleware.js";
 import { authorizedRoles } from "../middlewares/RoleAuthorization.js";
+import { isAuthorizedSubscriber } from "../middlewares/AuthSubscriber.js";
 const router=Router();
 router.route("/").get(getAllCourses).post(isLoggedIn,authorizedRoles("ADMIN"),upload.single("thumbnail"),createCourse);//Controllers will be determined based on the method of the request on the same route
-router.route("/:id").get(isLoggedIn,getLecturesByCourseid)
+router.route("/:id").get(isLoggedIn,isAuthorizedSubscriber,getLecturesByCourseid)
 .put(isLoggedIn,authorizedRoles("ADMIN"),updateCourse)
 .delete(isLoggedIn,authorizedRoles("ADMIN"),removeCourse)
 .post(isLoggedIn,authorizedRoles("ADMIN"),upload.single("lecture"),addLectureToCourseById)
