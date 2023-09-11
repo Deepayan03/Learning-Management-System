@@ -1,8 +1,0 @@
-{
-    "workbench.statusBar.visible": true,
-    "workbench.view.alwaysShowHeaderActions": true,
-    "editor.formatOnSave": true,
-    "editor.formatOnSaveMode": "modificationsIfAvailable",
-    "editor.formatOnType": true,
-    "files.autoGuessEncoding": true
-}
