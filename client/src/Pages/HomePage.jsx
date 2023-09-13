@@ -29,7 +29,7 @@ const HomePage = () => {
             <img src={homePageMainImage} className="" alt="home page" />
         </div>
       </div>
-    </HomeLayout>
+    </HomeLayout >
   );
 };
 

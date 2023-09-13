@@ -2,6 +2,7 @@ import React from "react";
 import { AiFillCloseCircle } from "react-icons/ai/";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import Footer from "../Components/footer";
 // import Card from "../Components/misc/card";
 const HomeLayout = ({ children }) => {
   const hideDrawer = () => {
@@ -65,26 +66,25 @@ const HomeLayout = ({ children }) => {
                 <li>
               
             </li>
-            {!isLoggedIn && (
+            {isLoggedIn && (
               <li className="flex flex-row">
-                <button className="btn-primary px-4  py-3 font-semibold rounded-md mr-3 text-black">
+                <button className="btn-primary px-4 py-3 flex justify-center  font-semibold rounded-md bg-white text-black mr-3">
                   <Link to="/login">Login</Link>
                 </button>
-                <button className="btn-primary px-4  py-3  font-semibold rounded-md bg-blue-300 text-black">
+                <button className="btn-primary px-4 py-3 flex justify-center  font-semibold rounded-md bg-blue-300 text-black">
                 <Link to="/signUp">Sign up</Link>
                 </button>
                 </li>
             )} 
-            {isLoggedIn && (
+            {!isLoggedIn && (
               <li className="flex flex-row" >
                
-                <button className="btn-primary px-4 py-3 font-semibold rounded-md mr-1 text-black">
+                <button className="btn-primary px-4 py-3 flex justify-center  font-semibold rounded-md bg-white text-black mr-3">
                 <Link onClick={handleLogout} >Logout</Link>
                 </button>
-                <button className="btn-primary px-3 py-3  font-semibold rounded-md bg-blue-300 text-black">
+                <button className="btn-primary px-4 py-3 flex justify-center  font-semibold rounded-md bg-blue-300 text-black">
                 <Link to="/user/profile">My Profile</Link>
                 </button>
-                
                 </li>
             )} 
 
@@ -105,7 +105,7 @@ const HomeLayout = ({ children }) => {
                 <button className="btn-primary px-2 py-1 h-11 w-15 font-semibold rounded-md  text-black">
                   <Link to="/login">Login</Link>
                 </button>
-                <button className="btn-primary px-2 py-1   h-11 w-15 font-semibold rounded-md bg-blue-300 text-black">
+                <button className="btn-primary px-2 py-1 h-11 w-15 font-semibold rounded-md  text-black">
                 <Link to="/signUp">Sign up</Link>
                 </button>
                 </div>
@@ -140,6 +140,7 @@ const HomeLayout = ({ children }) => {
         </div>
       </div>
       {children}
+      <Footer />
     </div>
   );
 };
