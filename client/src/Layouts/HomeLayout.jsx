@@ -66,7 +66,7 @@ const HomeLayout = ({ children }) => {
                 <li>
               
             </li>
-            {isLoggedIn && (
+            {!isLoggedIn && (
               <li className="flex flex-row">
                 <button className="btn-primary px-4 py-3 flex justify-center  font-semibold rounded-md bg-white text-black mr-3">
                   <Link to="/login">Login</Link>
@@ -76,7 +76,7 @@ const HomeLayout = ({ children }) => {
                 </button>
                 </li>
             )} 
-            {!isLoggedIn && (
+            {isLoggedIn && (
               <li className="flex flex-row" >
                
                 <button className="btn-primary px-4 py-3 flex justify-center  font-semibold rounded-md bg-white text-black mr-3">

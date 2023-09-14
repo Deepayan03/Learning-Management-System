@@ -10,11 +10,11 @@
     Course Management 
     User Authentication and Roles 
     Enrollment System 
+    Progress Tracking 
+    Analytics and Reports 
     Communication Tools (Future Enhancement)
     Assessment and Grading (Future Enhancement)
-    Progress Tracking (Future Enhancement)
     Discussion Forums (Future Enhancement)
-    Analytics and Reports (Future Enhancement)
     Customization (Future Enhancement)
 
 If you are viewing this repository then my message to you is that if you find any bugs/errors/potential threats please feel free to reachout and inform me about that :

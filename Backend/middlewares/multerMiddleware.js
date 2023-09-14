@@ -5,15 +5,16 @@ import path from 'path';
 const destinationDirectory = 'uploads/';
 
 // Define the file filter to accept only images
-const imageFilter = (req, file, cb) => {
-  const filetypes = /jpeg|jpg|png|gif|mp4/; // Add "mp4" to allow video files
-  const mimetype = filetypes.test(file.mimetype);
-  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-  if (mimetype && extname) {
-    return cb(null, true);
-  }
-  cb('Error: Only image files (jpeg, jpg, png, gif) and video files (mp4) are allowed!');
-};
+// const imageFilter = (req, file, cb) => {
+//   console.log(file);
+//   const filetypes = /jpeg|jpg|png|gif|mp4/; // Add "mp4" to allow video files
+//   const mimetype = filetypes.test(file.mimetype);
+//   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+//   if (mimetype && extname) {
+//     return cb(null, true);
+//   }
+//   cb('Error: Only image files (jpeg, jpg, png, gif) and video files (mp4) are allowed!');
+// };
 
 // Configure the multer storage and filename options 
 const storage = multer.diskStorage({
@@ -26,7 +27,7 @@ const storage = multer.diskStorage({
 });
 
 // Create a multer instance with the configured options and file filter
-const upload = multer({ storage, fileFilter: imageFilter });
+const upload = multer({ storage});
 console.log("Multer is running properly");
 // Export the multer middleware to be used in your routes
 export default upload;

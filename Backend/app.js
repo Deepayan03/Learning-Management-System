@@ -12,11 +12,12 @@ dotenv.config();
 // express.json() parses the every form of data to json data
 app.use(express.json());
 // Using cors to enable cross origin requests
-app.use(cors({
-    origin:[process.env.CLIENT],
-    credentials:true
-}));
-
+app.use(
+    cors({
+      origin: [process.env.FRONTEND_URL,"http://192.168.0.180:3000"],
+      credentials: true,
+    })
+  );
 
 app.use(express.json()); 
 // express.urlencoded() ensures that urlencoded form data can also be used

@@ -56,6 +56,7 @@ const register = async (req, res, next) => {
             console.log("File uploaded successfully and also deleted from local Storage");
           }
         }catch(e){
+          console.log(e);
           return next(new AppError(e || "File not uploaded please try again",400));
         }
       }
@@ -64,14 +65,16 @@ const register = async (req, res, next) => {
       newUser.password = undefined; // Set password to undefined to not send it in the response
   
       const token = newUser.generateJWTToken(); // Use newUser to generate the token
-  
       res.cookie("token", token, cookieOptions);
+      console.log("Executed successfully till this point")
       return res.status(201).json({
         success: true,
         message: "User registered successfully",
         data: newUser,
       });
+     
     } catch (error) {
+      console.log(error);
       return next(new AppError(error.message, 500));
     }
   };
@@ -99,6 +102,7 @@ const register = async (req, res, next) => {
             message: "User Logged in Successfully",
             data:User
         });
+        
     } catch (error) {
         return next(new AppError(error.message, 500));
     }
