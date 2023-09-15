@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import HomeLayout from "../Layouts/HomeLayout";
 import { BsPersonCircle } from "react-icons/bs";
-import { Await, Link, useNavigate } from "react-router-dom";
+import {  Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
 import { createAccount } from "../Redux/Slices/AuthSlice";
@@ -62,7 +62,7 @@ const SignUp = () => {
 
     // email validation using regex
     if (
-      !signupData.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+      !signupData.email.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
     ) {
       toast.error("Invalid email id");
       return;
@@ -75,14 +75,6 @@ const SignUp = () => {
       );
       return;
     }
-
-    // creating the form data from the existing data
-    // const formData = new FormData();
-    // formData.append("fullName", signupData.fullName);
-    // formData.append("email", signupData.email);
-    // formData.append("password", signupData.password);
-    // formData.append("avatar", signupData.avatar);
-
     // calling create account action
     const response = await dispatch(createAccount(signupData));
     if(response?.payload?.success)

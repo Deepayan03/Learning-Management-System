@@ -18,10 +18,10 @@ const HomePage = () => {
             </p>
             <div className="space-x-6">
                 <Link to="/courses">
-                <button class="btn btn-outline btn-secondary">Explore Courses</button>
+                <button className="btn btn-outline btn-secondary">Explore Courses</button>
                 </Link>
                 <Link to="/contact">
-                <button class="btn btn-outline btn-secondary">Contact Us</button>
+                <button className="btn btn-outline btn-secondary">Contact Us</button>
                 </Link>
             </div>
         </div>
