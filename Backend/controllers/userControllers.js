@@ -12,7 +12,7 @@ const cookieOptions={
 const register = async (req, res, next) => {
     try {
       const { fullName, email, password, role } = req.body;
-      console.log(fullName, email, password, role);
+      // console.log(fullName, email, password, role);
   
       if (!fullName || !email || !password) {
         return next(new AppError("All fields are required", 400));
@@ -83,7 +83,7 @@ const register = async (req, res, next) => {
         // const {email,password} = req.body;
         const email=req.body.email;
         const password=req.body.password;
-        console.log(req.body);
+        // console.log(req.body);
         if (!email || !password) {
             return next(new AppError("All fields are required", 400));
         }

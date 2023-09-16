@@ -2,7 +2,6 @@ import React from "react";
 import {BsFacebook, BsInstagram, BsLinkedin, BsTwitter} from "react-icons/bs"
 const Footer = () => {
   const year = new Date().getFullYear();
-  console.log(year);
   return (
     <>
       <footer className="fixed w-full left-0 bottom-0 h-10 py-5 flex  sm:flex-row items-center justify-between text-white bg-gray-400 px-10">
