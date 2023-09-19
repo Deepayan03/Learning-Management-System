@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import HomeLayout from "../Layouts/HomeLayout";
 import { BsPersonCircle } from "react-icons/bs";
-import {  Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
 import { createAccount } from "../Redux/Slices/AuthSlice";
+import { EmailValidator, PasswordValidator } from "../Helpers/Validator";
 const SignUp = () => {
   const [previewImage, setPreviewImage] = useState("");
   const dispatch = useDispatch();
@@ -42,34 +43,27 @@ const SignUp = () => {
   };
   const createNewAccount = async (event) => {
     event.preventDefault();
-
+    const { email, avatar, password, fullName } = signupData;
     // checking the empty fields
-    if (
-      !signupData.avatar ||
-      !signupData.email ||
-      !signupData.fullName ||
-      !signupData.password
-    ) {
+    if (!avatar || !email || !fullName || !password) {
       toast.error("Please fill all the fields");
       return;
     }
 
     // checking the name field length
-    if (signupData.fullName.length < 5) {
+    if (fullName.length < 5) {
       toast.error("Name should be atleast of 5 characters");
       return;
     }
 
     // email validation using regex
-    if (
-      !signupData.email.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
-    ) {
+    if (!EmailValidator(email)) {
       toast.error("Invalid email id");
       return;
     }
 
     // password validation using regex
-    if (!signupData.password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/)) {
+    if (!PasswordValidator(password)) {
       toast.error(
         "Minimum password length should be 8 with Uppercase, Lowercase, Number and Symbol"
       );
@@ -77,8 +71,7 @@ const SignUp = () => {
     }
     // calling create account action
     const response = await dispatch(createAccount(signupData));
-    if(response?.payload?.success)
-        navigate("/");
+    if (response?.payload?.success) navigate("/");
     console.log(response);
     // clearing the signup inputs
     setSignUpData({
@@ -89,7 +82,7 @@ const SignUp = () => {
     });
     setPreviewImage("");
   };
-  
+
   return (
     <HomeLayout>
       <div className="flex items-center justify-center h-[90vh]">

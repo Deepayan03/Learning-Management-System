@@ -22,19 +22,15 @@ const Login = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-
+    const {email , password} = loginData;
     // checking the empty fields
-    if (
-      !loginData.email ||
-      !loginData.password
-    ) {
+    if (!email || !password) {
       toast.error("Please fill all the fields");
       return;
     }
     // calling Login action
     const response = await dispatch(login(loginData));
-    if(response?.payload?.success)
-        navigate("/");
+    if (response?.payload?.success) navigate("/");
     console.log(response);
     // clearing the signup inputs
     setLoginData({
@@ -42,7 +38,7 @@ const Login = () => {
       password: "",
     });
   };
-  
+
   return (
     <HomeLayout>
       <div className="flex items-center justify-center h-[90vh]">
@@ -80,10 +76,10 @@ const Login = () => {
             onClick={(e) => handleLogin(e)}
             type="submit"
             className="bg-yellow-600 p-2 rounded-lg hover:bg-yellow-300 transition-all ease-in-out duration-500 text-black">
-           Login
+            Login
           </button>
           <p className="text-center">
-           Don't have an account ?
+            Don't have an account ?
             <Link
               to="/signUp"
               className=" link text-accent cursor-pointer hover:text-blue-700">
