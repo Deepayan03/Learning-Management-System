@@ -3,8 +3,8 @@
 ## Description
     Welcome to my Learning Management System (LMS) project, currently in the works 🚧.
     The goal of this project is to provide a comprehensive platform for managing online courses and educational content.
-    We are actively developing and refining the system to create a seamless learning experience.
-    For now I will start working on the frontend part of this project while learning React side by side.Will definitely enhance the backend part more after     completing the front end part.
+    I am actively developing and refining the system to create a seamless learning experience.
+    For now I will start working on the frontend part of this project while learning React side by side.Will definitely enhance the backend part more after completing the front end part.
 
 ## Key Features
     Course Management 
@@ -17,7 +17,7 @@
     Discussion Forums (Future Enhancement)
     Customization (Future Enhancement)
 
-If you are viewing this repository then my message to you is that if you find any bugs/errors/potential threats please feel free to reachout and inform me about that :
+If you are viewing this repository then my message to you is that if you find any bugs/errors/potential threats please feel free to reachout and inform me about it :
 My name: Deepayan Mukhopadhyay
 My email: mukhopadhyaydeepayan@gmail.com
 
