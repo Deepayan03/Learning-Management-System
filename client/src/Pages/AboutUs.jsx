@@ -7,7 +7,7 @@ import billGates from "../assets/billGates.png";
 import nellson from "../assets/nelsonMandela.png";
 import steveJobs from "../assets/steveJobs.png";
 import Carausel from "./Carausel";
-import Footer from "../Components/footer";
+
 const AboutUs = () => {
   const celebrities = [
     {
@@ -20,72 +20,66 @@ const AboutUs = () => {
     {
       title: "A. P. J. Abdul Kalam",
       description:
-        "Learning gives creativity, creativity leads to thinking,thinking provides knowledge, knowledge makes you great.",
+        "Learning gives creativity, creativity leads to thinking, thinking provides knowledge, knowledge makes you great.",
       image: apj,
       slideNumber: 2,
     },
     {
       title: "Albert Einstein",
       description:
-        "Education is not the learning of facts, but the training of themind to think.",
+        "Education is not the learning of facts, but the training of the mind to think.",
       image: einstein,
       slideNumber: 3,
     },
     {
       title: "Steve Jobs",
-      description:"Innovation distinguishes between a leader and a follower.",
+      description: "Innovation distinguishes between a leader and a follower.",
       image: steveJobs,
       slideNumber: 4,
     },
     {
       title: "Bill Gates",
-      description: "Technology is just a tool. In terms of getting the kids working together and motivating them, the teacher is the most",
+      description:
+        "Technology is just a tool. In terms of getting the kids working together and motivating them, the teacher is the most",
       image: billGates,
       slideNumber: 5,
     },
   ];
+
   return (
     <HomeLayout>
-      <div className="pl-20 pt-10 flex flex-col text-white">
-        {/* creating the about page main section */}
-        <div className="flex items-center gap-5 mx-10">
-          {/* out moto section */}
-          <section className="w-1/2 space-y-10">
+      <div className="pt-10 px-4 md:px-20 flex flex-col text-white ">
+        <section className="w-full  md:flex items-center gap-5">
+          <div className="md:w-1/2">
             <h1 className="text-5xl text-yellow-500 font-semibold">
               Affordable and Quality Education
             </h1>
             <p className="text-xl text-gray-200">
-              Our goal is to provide the affordable and quality education to the
-              world. We are providing the platform for the aspiring teachers and
-              students to share their creativity, skills and knowledge to each
-              other to empower and contribute in the growth and wellness of the
-              mankind.
+              Our goal is to provide affordable and quality education to the
+              world. We provide a platform for aspiring teachers and students to
+              share their creativity, skills, and knowledge with each other to
+              empower and contribute to the growth and well-being of mankind.
             </p>
-          </section>
-
-          {/* our moto image section */}
-          <div className="w-1/2">
+          </div>
+          <div className="md:w-1/3">
             <img
               id="test1"
-              style={{
-                filter: "drop-shadow(0px 10px 10px rgb(0, 0, 0))",
-              }}
-              className="drop-shadow-2xl "
+              className="w-full drop-shadow-2xl"
               src={aboutUs}
               alt="aboutMainImage"
             />
           </div>
-        </div>
+        </section>
 
-        {/* top personalities quotes section */}
-        <div className="carousel m-auto w-1/2 my-16">
-          {celebrities.map((item)=>(
+        <div className="carousel m-auto w-full md:w-1/2 my-16">
+          {celebrities.map((item) => (
             <Carausel
-                title={item.title}
-                image={item.image}
-                slideNumber={item.slideNumber}
-                description={item.description}
-                totalSlides={celebrities.length}
+              title={item.title}
+              image={item.image}
+              slideNumber={item.slideNumber}
+              description={item.description}
+              totalSlides={celebrities.length}
+              key={item.slideNumber}
             />
           ))}
         </div>

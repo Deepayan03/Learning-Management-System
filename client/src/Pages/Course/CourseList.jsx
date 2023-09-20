@@ -7,7 +7,8 @@ import { useQuery } from 'react-query';
 const CourseList = () => {
   const dispatch = useDispatch();
   const { courseData } = useSelector((state) => state.course);
-//   console.log(courseData)
+
+  //   console.log(courseData)
 //   const loadCourses = async () => {
 //     await dispatch(getAllCourses());
 // }
@@ -15,6 +16,7 @@ const CourseList = () => {
 //     loadCourses();
 //     // eslint-disable-next-line
 //   },[]);
+
   const fetchCourses = async () => {
     const response = await dispatch(getAllCourses());
     return response;
@@ -26,17 +28,18 @@ const CourseList = () => {
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });
-  console.log(data);
+
   if (isLoading) return 'Loading...';
   if (error) return 'An error has occurred: ' + error.message;
+
   return (
     <HomeLayout>
-      <div className="min-h-[90vh] pt-12 pl-20 pr-20 flex flex-col items-center justify-center text-white">
-        <h1 className="text-center text-3xl font-semibold mb-5">Explore the courses made by
-        <span className="font-bold text-yellow-500 "> Indrustry Experts</span>
+      <div className="pt-12 pl-20 pr-20 flex flex-col items-center justify-center text-white">
+        <h1 className="text-3xl font-semibold text-center mb-5">Explore the courses made by
+          <span className="font-bold text-yellow-500"> Industry Experts</span>
         </h1>
-        <div className="mb-10 flex flex-wrap gap-16 justify-center items-center">
-          {courseData?.map((course)=>(
+        <div className="flex flex-wrap gap-16 justify-center items-center">
+          {courseData?.map((course) => (
             <Card key={course._id} data={course}  />
           ))}
         </div>
