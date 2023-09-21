@@ -3,7 +3,7 @@ import axiosInstance from "../../Helpers/axiosInstance.js";
 import toast from "react-hot-toast";
 const initialState = {
   isLoggedIn: localStorage.getItem("isLoggedIn") || "",
-  role: localStorage.getItem("data")?.role || {},
+  role: localStorage.getItem("role") || {},
   data: localStorage.getItem("data") || {},
 };
 export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
@@ -83,5 +83,4 @@ const authSlice = createSlice({
   },
 });
 
-// export const { } = authSlice.actions;
 export default authSlice.reducer;

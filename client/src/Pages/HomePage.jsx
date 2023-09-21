@@ -9,7 +9,8 @@ const HomePage = () => {
       <div className="pt-10 text-white flex flex-col items-center justify-center gap-6 mx-4 md:mx-16 h-[70vh] md:flex-row">
         <div className="w-full md:w-1/2 text-center md:text-left">
           <h1 className="text-4xl md:text-5xl font-semibold">
-            Find the Best <span className="text-yellow-400 font-bold">Online Courses</span>
+            Find the Best{" "}
+            <span className="text-yellow-400 font-bold">Online Courses</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-200">
             We offer a vast library of courses taught by highly skilled and
@@ -29,7 +30,11 @@ const HomePage = () => {
           </div>
         </div>
         <div className="w-full md:w-1/2 flex justify-center">
-          <img src={homePageMainImage} alt="home page" className="max-w-full h-auto" />
+          <img
+            src={homePageMainImage}
+            alt="home page"
+            className="max-w-full h-auto"
+          />
         </div>
       </div>
     </HomeLayout>
