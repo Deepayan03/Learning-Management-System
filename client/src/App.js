@@ -11,7 +11,9 @@ import Denied from "./Pages/Denied";
 import CourseDescription from "./Pages/Course/CourseDescription";
 import Authorize from "./Components/Auth/Authorize";
 import CreateCourse from "./Pages/Course/CreateCourse";
-import UserProfile from "./Pages/UserProfile";
+import UserProfile from "./Pages/User/UserProfile";
+
+
 
 function App() {
   return (

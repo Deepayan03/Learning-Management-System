@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import HomeLayout from "../Layouts/HomeLayout";
 import { Link } from "react-router-dom";
+import HomeLayout from "../../Layouts/HomeLayout";
 
 const UserProfile = () => {
   const userData = useSelector((state) => state?.auth?.data);
@@ -42,9 +42,11 @@ const UserProfile = () => {
               </button>
             </Link>
           </div>
-          {(userData.subscription?.status === "active") && <button className="bg-red-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 cursor-pointer text-center text-black font-bold py-2 px-4 rounded-lg ">
-            Cancel Subscription
-          </button> }
+          {userData.subscription?.status === "active" && (
+            <button className="bg-red-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 cursor-pointer text-center text-black font-bold py-2 px-4 rounded-lg ">
+              Cancel Subscription
+            </button>
+          )}
         </div>
       </div>
     </HomeLayout>
