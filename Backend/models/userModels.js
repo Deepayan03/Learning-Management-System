@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 
@@ -53,7 +53,7 @@ const schema = new Schema({
   timestamps: true,
 });
 
-// Use async/await correctly in the pre-save hook
+
 schema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     return next();

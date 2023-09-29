@@ -11,6 +11,7 @@ import Denied from "./Pages/Denied";
 import CourseDescription from "./Pages/Course/CourseDescription";
 import Authorize from "./Components/Auth/Authorize";
 import CreateCourse from "./Pages/Course/CreateCourse";
+import UserProfile from "./Pages/UserProfile";
 
 function App() {
   return (
@@ -27,6 +28,10 @@ function App() {
       {/* ADMIN routes */}
       <Route  element={<Authorize allowedRoles={["ADMIN"]}/>}>
       <Route path="/course/create" element={<CreateCourse />}></Route>
+      </Route>
+      {/* Profile Route  Accessible for both normal users and admin*/}
+      <Route  element={<Authorize allowedRoles={["ADMIN","USER"]}/>}>
+      <Route path="/user/profile" element={<UserProfile />}></Route>
       </Route>
       {/*PAGE NOT FOUND route */}
       <Route path="*" element={<NotFound />}></Route>
