@@ -2,15 +2,15 @@ import jwt from "jsonwebtoken";
 import AppError from "../utils/utilError.js";
 
 const isLoggedIn = async (req, res, next) => {
-    console.log(req)
+    // console.log(req)
     const token = req.cookies.token// Access token from cookies
-     console.log(token);
+    //  console.log(token);
     if (!token) {
         return next(new AppError("Unauthenticated", 400));
     }
     try {
         const userDetails = jwt.verify(token, process.env.SECRET);
-        console.log(userDetails);
+        // console.log(userDetails);
         req.user = userDetails;
         next();
     } catch (error) {

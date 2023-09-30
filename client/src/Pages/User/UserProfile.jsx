@@ -36,13 +36,13 @@ const UserProfile = () => {
                 Change Password
               </button>
             </Link>
-            <Link to="/user/EditProfile">
+            <Link to="/user/editProfile">
               <button className="bg-yellow-600 hover:bg-yellow-700 transition-all ease-in-out duration-300 cursor-pointer text-center text-black font-bold py-2 px-4 rounded-lg ">
                 Edit Profile
               </button>
             </Link>
           </div>
-          {userData.subscription?.status === "active" && (
+          {userData?.subscription?.status === "active" && (
             <button className="bg-red-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 cursor-pointer text-center text-black font-bold py-2 px-4 rounded-lg ">
               Cancel Subscription
             </button>

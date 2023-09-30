@@ -7,7 +7,7 @@ const controller=Router();
 controller.post("/register",upload.single("avatar"),register);
 controller.post("/login",login);
 controller.get("/logout",logout);
-controller.get("/getProfile",isLoggedIn,getProfile);
+controller.get("/getProfile/",isLoggedIn,getProfile);
 controller.post("/forgotPassword",forgotPassword);
 controller.post("/resetPassword/:resetToken", resetPassword);
 controller.post("/changePassword",isLoggedIn,changePassword);

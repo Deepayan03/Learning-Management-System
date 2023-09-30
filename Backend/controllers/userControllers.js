@@ -120,8 +120,9 @@ const logout=(req,res,next)=>{
 }
 const getProfile = async (req, res, next) => {
     try {
-        const userId = req.user.id;
-        const User = await user.findOne({ _id: userId });
+        const { id } = req.user;
+        // console.log(id)
+        const User = await user.findOne({ _id: id });
         return res.status(200).json({
             success: true,
             message: "User Details",
@@ -209,8 +210,8 @@ const changePassword=async(req,res,next)=>{
 
 }
 const updateUser=async(req,res,next)=>{
+  const { id }=req.user;
   const {fullName}=req.body;
-  const {id}=req.user;
   const UserExists=await user.findById(id);
   if(!UserExists){
     return next(new AppError("User not found",400));
@@ -218,7 +219,7 @@ const updateUser=async(req,res,next)=>{
   if (req.body.fullName) {
     UserExists.fullName = fullName;
   }
-  console.log(UserExists);
+  // console.log(UserExists);
   if(req.file){
     await cloudinary.v2.uploader.destroy(UserExists.avatar.public_id);
   }
@@ -233,9 +234,9 @@ const updateUser=async(req,res,next)=>{
       crop:"fill"
     });
     if(result){
-      console.log(result.secure_url);
-      newUser.avatar.public_id=result.public_id;
-      newUser.avatar.secure_url=result.secure_url;
+      console.log(result);
+      UserExists.avatar.public_id=result.public_id;
+      UserExists.avatar.secure_url=result.secure_url;
       fs.rmSync(req.file.path);
       console.log("File uploaded successfully and also deleted from local Storage");
     }
@@ -243,12 +244,13 @@ const updateUser=async(req,res,next)=>{
     return next(new AppError(e || "File not uploaded please try again",400));
   }
 }
-
   await UserExists.save();
   res.status(200).json({
     success:true,
     message:"Profile update successful"
   });
 }
+
+
 
 export {register,login,logout,getProfile,forgotPassword,resetPassword,changePassword,updateUser};
