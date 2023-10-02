@@ -38,6 +38,7 @@ app.use(morgan("dev"));
 app.use("/user",userRoutes);
 // If someone hits the /courses route they will be redirected to the courseRoutes
 app.use("/courses",courseRoutes);
+// Routes for all payments
 app.use("/payments",paymentRoutes);
 app.use('/misc', miscRoutes);
 // Defined a custom middleware for throwing error

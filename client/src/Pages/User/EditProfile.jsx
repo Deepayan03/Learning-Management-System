@@ -8,7 +8,6 @@ import { BsPersonCircle } from "react-icons/bs";
 const EditProfile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [previewImage, setPreviewImage] = useState();
   const [data, setData] = useState({
     previewImage: "",
     fullName: "",
@@ -23,7 +22,6 @@ const EditProfile = () => {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       fileReader.onloadend = () => {
-        setPreviewImage(fileReader.result);
         setData({ ...data, avatar: file, previewImage: fileReader.result });
       };
     }
@@ -49,7 +47,7 @@ const EditProfile = () => {
     formData.append("avatar", data.avatar);
     formData.append("userId", data.userId);
     await dispatch(updateProfile(formData));
-    await  dispatch(getUserData(data.userId));
+    await dispatch(getUserData(data.userId));
     navigate("/user/profile");
   };
 
@@ -97,8 +95,7 @@ const EditProfile = () => {
           <button
             type="submit"
             className="bg-yellow-600 w-full hover:bg-yellow-200 text-black transition-all ease-in-out duration-300 cursor-pointer text-center font-semibold py-2 px-4 rounded-lg"
-            onClick={onSubmit}
-            >
+            onClick={onSubmit}>
             Submit
           </button>
         </form>
