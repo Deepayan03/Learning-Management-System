@@ -13,6 +13,9 @@ import Authorize from "./Components/Auth/Authorize";
 import CreateCourse from "./Pages/Course/CreateCourse";
 import UserProfile from "./Pages/User/UserProfile";
 import EditProfile from "./Pages/User/EditProfile";
+import Checkout from "./Pages/Payments/Checkout";
+import Success from "./Pages/Payments/Success";
+
 
 
 
@@ -28,6 +31,7 @@ function App() {
       <Route path="/contact" element={<ContactUs />}></Route>
       <Route path="/denied" element={<Denied />}></Route>
       <Route path="/course/description" element={<CourseDescription />}></Route>
+      <Route path="/payment/success" element={<Success />}></Route>
       {/* ADMIN routes */}
       <Route  element={<Authorize allowedRoles={["ADMIN"]}/>}>
       <Route path="/course/create" element={<CreateCourse />}></Route>
@@ -36,6 +40,8 @@ function App() {
       <Route  element={<Authorize allowedRoles={["ADMIN","USER"]}/>}>
       <Route path="/user/profile" element={<UserProfile />}></Route>
       <Route path="/user/editProfile" element={<EditProfile />}></Route>
+      <Route path="/checkout" element={<Checkout />}></Route>
+      
       </Route>
       {/*PAGE NOT FOUND route */}
       <Route path="*" element={<NotFound />}></Route>

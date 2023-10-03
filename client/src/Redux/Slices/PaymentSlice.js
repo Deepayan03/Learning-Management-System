@@ -14,9 +14,12 @@ const initialState = {
 export const getRazorPayId = createAsyncThunk("/razorPay", async () => {
   try {
     const response = await axiosInstance.get("/payments/key");
+    console.log("Id------");
+    console.log(response);
     return response.data;
   } catch (error) {
     toast.error(error?.response?.data?.message);
+    console.log(error);
   }
 });
 
@@ -25,8 +28,10 @@ export const purchaseCourseBundles = createAsyncThunk(
   async () => {
     try {
       const response = await axiosInstance.post("/payments/subscribe");
-      return response.data;
+      console.log(response);
+      return response?.data;
     } catch (error) {
+      console.log(error);
       toast.error(error?.response?.data?.message);
     }
   }
@@ -35,14 +40,17 @@ export const purchaseCourseBundles = createAsyncThunk(
 export const verifyUserPayment = createAsyncThunk(
   "/purchase-course",
   async (data) => {
+    console.log(data)
     try {
       const response = await axiosInstance.post("/payments/verify", {
         razorpay_payment_id: data.razorpay_payment_id,
         razorpay_signature: data.razorpay_signature,
         razorpay_subscription_id: data.razorpay_subscription_id,
       });
+      console.log(response);
       return response.data;
     } catch (error) {
+      console.log(error);
       toast.error(error?.response?.data?.message);
     }
   }
@@ -64,6 +72,7 @@ export const getPaymentRecord = createAsyncThunk(
       });
       return await response?.data;
     } catch (error) {
+      console.log(error);
       toast.error(error?.response?.data?.message);
     }
   }
@@ -85,6 +94,7 @@ export const cancelSubscription = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
+      console.log(error);
       toast.error(error?.response?.data?.message);
     }
   }
@@ -100,11 +110,12 @@ const razorPaySlice = createSlice({
         state.key = action?.payload?.key;
       })
       .addCase(purchaseCourseBundles.fulfilled, (state, action) => {
-        state.subscription_id = action?.payload?.subscription_id;
+        state.subscription_id = action?.payload?.id;
       })
       .addCase(verifyUserPayment.fulfilled, (state, action) => {
+        console.log(action.payload);
         toast.success(action?.payload?.message);
-        state.isPaymentVerified = true;
+        state.isPaymentVerified = action?.payload?.success;
       })
       .addCase(getPaymentRecord.fulfilled, (state, action) => {
         state.allPayments = action?.payload;
@@ -120,5 +131,4 @@ const razorPaySlice = createSlice({
       });
   },
 });
-
-export default razorPaySlice;
+export default razorPaySlice.reducer;
