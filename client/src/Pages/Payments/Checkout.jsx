@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import razorPaySlice, {
+import  {
   getRazorPayId,
   purchaseCourseBundles,
   verifyUserPayment,
@@ -9,7 +9,6 @@ import razorPaySlice, {
 import toast from "react-hot-toast";
 import HomeLayout from "../../Layouts/HomeLayout";
 import { BiRupee } from "react-icons/bi";
-import CourseSliceReducer from "../../Redux/Slices/CourseSlice";
 import { getUserData } from "../../Redux/Slices/AuthSlice";
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -21,20 +20,18 @@ const Checkout = () => {
   );
 
   const userData = useSelector((state) => state?.auth?.data);
-  const paymentDetails = useState({
+  let paymentDetails = {
     razorpay_payment_id: "",
     razorpay_signature: "",
     razorpay_subscription_id: "",
-  });
+  };
   const handleSubscription = async (e) => {
     e.preventDefault();
-    console.log(razorPaySlice);
-    console.log(CourseSliceReducer);
-    console.log(razorPayKey, subscription_id);
     if (!razorPayKey || !subscription_id) {
       toast.error("Something went wrong. Please try again later");
       return;
     }
+    console.log(razorPayKey, subscription_id);
     const options = {
       key: razorPayKey,
       subscription_id: subscription_id,
@@ -48,7 +45,7 @@ const Checkout = () => {
         name: userData?.name,
       },
       handler: async (response) => {
-        console.log(response);
+        // console.log(response);
         paymentDetails.razorpay_payment_id = response.razorpay_payment_id;
         paymentDetails.razorpay_signature = response.razorpay_signature;
         paymentDetails.razorpay_subscription_id =
@@ -56,7 +53,9 @@ const Checkout = () => {
         const res = await dispatch(verifyUserPayment(paymentDetails));
         toast.success("Payment Successful");
         await dispatch(getUserData());
-        res?.payload?.success ? navigate("/payment/success") : navigate("/failed");
+        res?.payload?.success
+          ? navigate("/payment/success")
+          : navigate("/payment/failure");
       },
     };
     const paymentObject = new window.Razorpay(options);

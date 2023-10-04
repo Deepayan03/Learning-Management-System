@@ -14,7 +14,7 @@ const EditProfile = () => {
     avatar: undefined,
     userId: useSelector((state) => state?.auth?.data?._id),
   });
-  console.log(data.userId);
+  // console.log(data.userId);
   const handleUpload = (e) => {
     e.preventDefault();
     const file = e.target.files[0];
@@ -29,7 +29,7 @@ const EditProfile = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
-    console.log(data);
+    // console.log(data);
   };
 
   const onSubmit = async (e) => {

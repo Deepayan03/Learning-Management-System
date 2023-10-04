@@ -62,18 +62,18 @@ const verifySubscription = async (req, res, next) => {
       razorpay_signature,
       razorpay_subscription_id,
     } = req.body;
-    console.log(
-      razorpay_payment_id,
-      razorpay_signature,
-      razorpay_subscription_id
-    );
+    // console.log(
+    //   razorpay_payment_id,
+    //   razorpay_signature,
+    //   razorpay_subscription_id
+    // );
     const User = await user.findById(id);
 
     if (!User) {
       return next(new AppError("Unauthorized Please log in", 400));
     }
     const subscriptionId = User.subscription.id;
-    console.log(subscriptionId);
+    // console.log(subscriptionId);
     const generatedSignature = crypto
       .createHmac("sha256", process.env.PAY_SECRET)
       .update(`${razorpay_payment_id}|${subscriptionId}`)
@@ -120,8 +120,8 @@ const cancelSubscription = async (req, res, next) => {
     }
 
     const subscription_id = User.subscription.id;
-    const subscription = razorpay.subscriptions.cancel(subscription_id);
-
+    const subscription = await razorpay.subscriptions.cancel(subscription_id);
+    console.log(subscription);
     User.subscription.status = subscription.status;
 
     await User.save();

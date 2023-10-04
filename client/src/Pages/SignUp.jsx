@@ -72,7 +72,7 @@ const SignUp = () => {
     // calling create account action
     const response = await dispatch(createAccount(signupData));
     if (response?.payload?.success) navigate("/");
-    console.log(response);
+    // console.log(response);
     // clearing the signup inputs
     setSignUpData({
       fullName: "",

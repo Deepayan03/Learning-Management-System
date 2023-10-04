@@ -44,7 +44,6 @@ const CreateCourse = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const { title, description, category, thumbnail, createdBy } = userInput;
-    console.log( title, description, category, thumbnail, createdBy);
     if (!title || !description || !category || !thumbnail || !createdBy) {
       toast.error("All fields are required");
       return;

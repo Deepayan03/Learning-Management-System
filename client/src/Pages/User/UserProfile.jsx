@@ -1,11 +1,21 @@
+import { useDispatch } from 'react-redux';
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import HomeLayout from "../../Layouts/HomeLayout";
-
+import {cancelSubscription} from "../../Redux/Slices/PaymentSlice";
+import { getUserData } from '../../Redux/Slices/AuthSlice';
 const UserProfile = () => {
   const userData = useSelector((state) => state?.auth?.data);
-  console.log(userData);
+  // console.log(userData);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleCancellation = async (e)=>{
+    e.preventDefault();
+    await dispatch(cancelSubscription());
+    await dispatch(getUserData());
+    navigate("/");
+  }
   return (
     <HomeLayout>
       <div className="min-h-[60vh] flex items-center justify-center">
@@ -42,8 +52,8 @@ const UserProfile = () => {
               </button>
             </Link>
           </div>
-          {userData?.subscription?.status === "active" && (
-            <button className="bg-red-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 cursor-pointer text-center text-black font-bold py-2 px-4 rounded-lg ">
+          {userData?.subscription?.status === "ACTIVE" && (
+            <button onClick={handleCancellation} className="bg-red-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 cursor-pointer text-center text-black font-bold py-2 px-4 rounded-lg ">
               Cancel Subscription
             </button>
           )}

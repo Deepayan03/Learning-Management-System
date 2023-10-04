@@ -13,10 +13,8 @@ const initialState = {
 
 export const getRazorPayId = createAsyncThunk("/razorPay", async () => {
   try {
-    const response = await axiosInstance.get("/payments/key");
-    console.log("Id------");
-    console.log(response);
-    return response.data;
+    const response = await  axiosInstance.get("/payments/key");
+    return  (response)?.data;
   } catch (error) {
     toast.error(error?.response?.data?.message);
     console.log(error);
@@ -28,8 +26,8 @@ export const purchaseCourseBundles = createAsyncThunk(
   async () => {
     try {
       const response = await axiosInstance.post("/payments/subscribe");
-      console.log(response);
-      return response?.data;
+      // console.log(response);
+      return  response?.data;
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
@@ -47,8 +45,8 @@ export const verifyUserPayment = createAsyncThunk(
         razorpay_signature: data.razorpay_signature,
         razorpay_subscription_id: data.razorpay_subscription_id,
       });
-      console.log(response);
-      return response.data;
+      // console.log(response);
+      return  (response).data;
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
@@ -82,17 +80,14 @@ export const cancelSubscription = createAsyncThunk(
   "/payments/cancel",
   async () => {
     try {
-      const response = await axiosInstance.post("/payments/unsubscribe");
+      const response = axiosInstance.post("/payments/unsubscribe");
       toast.promise(response, {
         loading: "Cancelling subscription...",
-        success: (data) => {
-          return data?.data?.message;
-        },
-        error: (error) => {
-          return error?.response?.data?.message;
+        success: (response)=>{
+          return response?.data?.message;
         },
       });
-      return response.data;
+      return (await response).data;
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
@@ -113,8 +108,7 @@ const razorPaySlice = createSlice({
         state.subscription_id = action?.payload?.id;
       })
       .addCase(verifyUserPayment.fulfilled, (state, action) => {
-        console.log(action.payload);
-        toast.success(action?.payload?.message);
+        // console.log(action.payload);
         state.isPaymentVerified = action?.payload?.success;
       })
       .addCase(getPaymentRecord.fulfilled, (state, action) => {
@@ -123,6 +117,7 @@ const razorPaySlice = createSlice({
         state.monthlySalesRecord = action?.payload?.monthlySalesRecord;
       })
       .addCase(cancelSubscription.fulfilled, (state, action) => {
+        // console.log(action);
         state.isPaymentVerified = false;
       })
       .addCase(verifyUserPayment.rejected, (state, action) => {
