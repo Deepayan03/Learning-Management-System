@@ -243,6 +243,7 @@ const updateUser = async (req, res, next) => {
         fs.rmSync(req.file.path);
         // console.log("File uploaded successfully and also deleted from local Storage");
       }
+      console.log(UserExists);
     } catch (e) {
       return next(new AppError(e || "File not uploaded please try again", 400));
     }

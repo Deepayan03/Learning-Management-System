@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import HomeLayout from "../../Layouts/HomeLayout";
 import { BiRupee } from "react-icons/bi";
 import CourseSliceReducer from "../../Redux/Slices/CourseSlice";
+import { getUserData } from "../../Redux/Slices/AuthSlice";
 const Checkout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -54,6 +55,7 @@ const Checkout = () => {
           response.razorpay_subscription_id;
         const res = await dispatch(verifyUserPayment(paymentDetails));
         toast.success("Payment Successful");
+        await dispatch(getUserData());
         res?.payload?.success ? navigate("/payment/success") : navigate("/failed");
       },
     };

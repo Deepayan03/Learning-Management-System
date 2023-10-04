@@ -25,9 +25,9 @@ const UserProfile = () => {
             <p>{userData?.role}</p>
             <p>Subscription:</p>
             <p>
-              {userData?.subscription?.status === "active"
-                ? "Active"
-                : "Inactive"}
+              {userData?.subscription?.status === "ACTIVE"
+                ? "ACTIVE"
+                : "INACTIVE"}
             </p>
           </div>
           <div className="flex items-center justify-between gap-2">

@@ -47,7 +47,7 @@ const EditProfile = () => {
     formData.append("avatar", data.avatar);
     formData.append("userId", data.userId);
     await dispatch(updateProfile(formData));
-    await dispatch(getUserData(data.userId));
+    await dispatch(getUserData());
     navigate("/user/profile");
   };
 

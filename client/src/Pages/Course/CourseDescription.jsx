@@ -44,7 +44,7 @@ const CourseDescription = () => {
                   </button>
                 ) : (
                   <button
-                    onClick={() =>navigate("/checkout")}
+                    onClick={() => navigate("/checkout")}
                     className="bg-yellow-500 text-xl rounded-xl font-bold px-5 py-3 w-full md:w-auto hover:bg-yellow-100 text-black transition-all ease-in-out duration-300">
                     Subscribe
                   </button>
