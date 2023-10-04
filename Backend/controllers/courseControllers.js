@@ -120,7 +120,6 @@ const removeCourse = async (req, res, next) => {
 
 // Note: Images more than 1 mb and videos more than 10mb cannot be uploaded because the free tier of cloudinary is being used here
 const addLectureToCourseById = async (req, res, next) => {
-  // console.log(req.headers['content-type']);
   const { title, description } = req.body;
   const { id } = req.params;
   const course = await Course.findById(id);

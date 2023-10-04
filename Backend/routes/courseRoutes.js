@@ -12,6 +12,6 @@ router.route("/:id").get(isLoggedIn,isAuthorizedSubscriber,getLecturesByCourseid
 .post(isLoggedIn,authorizedRoles("ADMIN"),upload.single("lecture"),addLectureToCourseById)
 
 
-router.route("/:id/:lectureId").purge(isLoggedIn,authorizedRoles("ADMIN"),deleteLecturebyid);
+router.route("/:id/:lectureId").delete(isLoggedIn,authorizedRoles("ADMIN"),deleteLecturebyid);
 //Controllers will be determined based on the method of the request on the same route
 export default router;
