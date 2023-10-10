@@ -39,7 +39,9 @@ const CourseDescription = () => {
               </div>
               <div className="flex items-center justify-center md:justify-start">
                 {role === "ADMIN" || data?.subscription?.status === "ACTIVE" ? (
-                  <button className="bg-yellow-500 text-xl rounded-xl font-bold px-5 py-3 w-full md:w-auto hover:bg-yellow-300 text-black transition-all ease-in-out duration-300">
+                  <button 
+                  onClick={() => navigate("/course/displayLectures",{state:{...state}})}
+                  className="bg-yellow-500 text-xl rounded-xl font-bold px-5 py-3 w-full md:w-auto hover:bg-yellow-300 text-black transition-all ease-in-out duration-300">
                     Watch Lectures
                   </button>
                 ) : (

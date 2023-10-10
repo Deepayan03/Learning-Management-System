@@ -9,7 +9,7 @@ const isLoggedIn = async (req, res, next) => {
         return next(new AppError("Unauthenticated", 400));
     }
     try {
-        const userDetails = jwt.verify(token, process.env.SECRET);
+        const userDetails = await jwt.verify(token, process.env.SECRET);
         // console.log(userDetails);
         req.user = userDetails;
         next();
@@ -17,6 +17,7 @@ const isLoggedIn = async (req, res, next) => {
         console.log(error);
         return next(new AppError("Invalid or expired token", 401));
     }
+   
 };
 
 export { isLoggedIn };

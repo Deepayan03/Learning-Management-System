@@ -104,6 +104,7 @@ const updateCourse = async (req, res, next) => {
 const removeCourse = async (req, res, next) => {
   try {
     const { id } = req.params;
+    console.log(id);
     const course = await Course.findById(id);
     if (!course) {
       return next(new AppError("Course doesnot exist", 400));
@@ -163,32 +164,37 @@ const addLectureToCourseById = async (req, res, next) => {
 const deleteLecturebyid = async (req, res, next) => {
   const { id, lectureId } = req.params;
   // console.log(lectureId);
-  const course = await Course.findById(id);
-  if (!course) {
-    return next(new AppError("Course does not exist", 500));
+  console.log(id, lectureId);
+  try {
+    const course = await Course.findById(id);
+    if (!course) {
+      return next(new AppError("Course does not exist", 500));
+    }
+
+    // Use findIndex to get the index of the lecture in the array
+    const lectureIndex = course.lectures.findIndex(
+      (lecture) => lecture._id.toString() === lectureId
+    );
+    // console.log(lectureIndex);
+
+    if (lectureIndex === -1) {
+      return next(new AppError("Wrong lecture id", 400));
+    }
+
+    // Remove the lecture from the lectures array using splice
+    const deletedLecture = course.lectures.splice(lectureIndex, 1)[0];
+
+    // Save the updated course
+    await course.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Lecture deleted successfully",
+      data: deletedLecture, // Return the deleted lecture in the response
+    });
+  } catch (error) {
+    return next(new AppError(error.message),400);
   }
-
-  // Use findIndex to get the index of the lecture in the array
-  const lectureIndex = course.lectures.findIndex(
-    (lecture) => lecture._id.toString() === lectureId
-  );
-  // console.log(lectureIndex);
-
-  if (lectureIndex === -1) {
-    return next(new AppError("Wrong lecture id", 400));
-  }
-
-  // Remove the lecture from the lectures array using splice
-  const deletedLecture = course.lectures.splice(lectureIndex, 1)[0];
-
-  // Save the updated course
-  await course.save();
-
-  res.status(200).json({
-    success: true,
-    message: "Lecture deleted successfully",
-    data: deletedLecture, // Return the deleted lecture in the response
-  });
 };
 
 export {
