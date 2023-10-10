@@ -39,8 +39,8 @@ const DisplayLectures = () => {
         <h1 className="text-center text-2xl font-semibold text-yellow-500">
           Course Name : {state?.title}
         </h1>
-
-        <div className="flex justify-center gap-10 w-full">
+        { console.log(lectures)}
+       {  lectures.lectures.length >0 && <div className="flex justify-center gap-10 w-full ">
           {/* left section for playing the video and displaying course details to admin */}
           <div className="space-y-5 w-[28rem] p-2 rounded-lg shadow-[0_0_10px_black]">
             {/* {console.log(lectures.lectures[currentLecture].lecture.secure_url)} */}
@@ -70,7 +70,7 @@ const DisplayLectures = () => {
           </div>
 
           {/* right section for displaying all the lectures of the course */}
-          <ul className="w-[28rem] p-2 rounded-lg shadow-[0_0_10px_black] space-y-4">
+          <ul className="w-[28rem] p-2 rounded-lg shadow-[0_0_10px_black] space-y-4 ">
             <li className="font-semibold text-xl text-yellow-500 flex items-center justify-between">
               <p>Lectures List</p>
               {role === "ADMIN" && (
@@ -88,7 +88,7 @@ const DisplayLectures = () => {
             {lectures &&
               lectures.lectures.map((element, index) => {
                 return (
-                  <li className="space-y-2" key={element._id}>
+                  <li className="space-y-2 bg-slate-500 p-3 rounded-xl" key={element._id}>
                     <p
                       className="cursor-pointer"
                       onClick={() => setCurrentLecture(index)}>
@@ -111,7 +111,7 @@ const DisplayLectures = () => {
                 );
               })}
           </ul>
-        </div>
+        </div>}
       </div>
     </HomeLayout>
   );

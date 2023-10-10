@@ -77,7 +77,7 @@ schema.methods = {
         },
         process.env.SECRET,
         {
-          expiresIn: "1h",
+          expiresIn: "7d",
         }
       );
     },

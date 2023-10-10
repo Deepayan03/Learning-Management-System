@@ -183,7 +183,7 @@ const deleteLecturebyid = async (req, res, next) => {
 
     // Remove the lecture from the lectures array using splice
     const deletedLecture = course.lectures.splice(lectureIndex, 1)[0];
-
+    course.numberOfLectures = course.numberOfLectures - 1;
     // Save the updated course
     await course.save();
 
@@ -193,7 +193,7 @@ const deleteLecturebyid = async (req, res, next) => {
       data: deletedLecture, // Return the deleted lecture in the response
     });
   } catch (error) {
-    return next(new AppError(error.message),400);
+    return next(new AppError(error.message), 400);
   }
 };
 
