@@ -17,7 +17,7 @@ export const getCourseLectures = createAsyncThunk(
           return response?.data?.message;
         },
       });
-     const res = (await response).data;
+      const res = (await response).data;
       return res;
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -36,7 +36,7 @@ export const addCourseLectures = createAsyncThunk(
 
       const response = axiosInstance.post(
         `/courses/${courseData.id}`,
-        courseData
+        formData
       );
       toast.promise(response, {
         loading: "Adding Lectures....",
@@ -44,7 +44,9 @@ export const addCourseLectures = createAsyncThunk(
           return response?.data?.message;
         },
       });
-      return await response?.data;
+      const res = await response?.data;
+      console.log(res);
+      return (await response)?.data;
     } catch (error) {
       toast.error(error?.response?.data?.message);
     }
@@ -55,8 +57,8 @@ export const deleteCourseLectures = createAsyncThunk(
   "/course/lectures/delete",
   async (courseData) => {
     try {
-      const [courseId , lectureId] = courseData;
-      console.log(courseId,lectureId);
+      const [courseId, lectureId] = courseData;
+      console.log(courseId, lectureId);
       const response = axiosInstance.delete(
         `/courses/delete/${courseId}/${lectureId}`
       );
@@ -85,7 +87,7 @@ const lectureSlice = createSlice({
         state.lectures = action.payload?.data;
       })
       .addCase(addCourseLectures.fulfilled, (state, action) => {
-        console.log(action.payload.data);
+        console.log(action.payload?.data);
         state.lectures = action?.payload?.data;
       });
   },

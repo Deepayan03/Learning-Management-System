@@ -16,9 +16,7 @@ import Checkout from "./Pages/Payments/Checkout";
 import Success from "./Pages/Payments/Success";
 import Failure from "./Pages/Payments/Failure";
 import DisplayLectures from "./Pages/User/Dashboard.jsx/DisplayLectures";
-
-
-
+import AddLecture from "./Pages/User/Dashboard.jsx/AddLecture";
 
 function App() {
   return (
@@ -33,17 +31,20 @@ function App() {
       <Route path="/denied" element={<Denied />}></Route>
       <Route path="/course/description" element={<CourseDescription />}></Route>
       {/* ADMIN routes */}
-      <Route  element={<Authorize allowedRoles={["ADMIN"]}/>}>
-      <Route path="/course/create" element={<CreateCourse />}></Route>
+      <Route element={<Authorize allowedRoles={["ADMIN"]} />}>
+        <Route path="/course/create" element={<CreateCourse />}></Route>
+        <Route path="/course/addlecture" element={<AddLecture />}></Route>
       </Route>
       {/* Profile Route  Accessible for both normal users and admin*/}
-      <Route  element={<Authorize allowedRoles={["ADMIN","USER"]}/>}>
-      <Route path="/user/profile" element={<UserProfile />}></Route>
-      <Route path="/user/editProfile" element={<EditProfile />}></Route>
-      <Route path="/checkout" element={<Checkout />}></Route>
-      <Route path="/payment/success" element={<Success />}></Route>
-      <Route path="/payment/failure" element={<Failure />}></Route>
-      <Route path="/course/displayLectures" element={<DisplayLectures />}></Route>
+      <Route element={<Authorize allowedRoles={["ADMIN", "USER"]} />}>
+        <Route path="/user/profile" element={<UserProfile />}></Route>
+        <Route path="/user/editProfile" element={<EditProfile />}></Route>
+        <Route path="/checkout" element={<Checkout />}></Route>
+        <Route path="/payment/success" element={<Success />}></Route>
+        <Route path="/payment/failure" element={<Failure />}></Route>
+        <Route
+          path="/course/displayLectures"
+          element={<DisplayLectures />}></Route>
       </Route>
       {/*PAGE NOT FOUND route */}
       <Route path="*" element={<NotFound />}></Route>

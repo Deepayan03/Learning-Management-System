@@ -6,7 +6,7 @@ const destinationDirectory = 'uploads/';
 
 // Define the file filter to accept only images
 const imageFilter = (req, file, cb) => {
-  const filetypes = /jpeg|jpg|png|gif/;
+  const filetypes = /jpeg|jpg|png|gif|mp4/;
   const mimetype = filetypes.test(file.mimetype);
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
   if (mimetype && extname) {
