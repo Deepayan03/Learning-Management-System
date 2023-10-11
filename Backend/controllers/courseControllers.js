@@ -147,6 +147,7 @@ const addLectureToCourseById = async (req, res, next) => {
       }
       fs.rm(`uploads/${req.file.filename}`);
     } catch (error) {
+      fs.rm(`uploads/${req.file.filename}`);
       return next(new AppError(error.message, 400));
     }
   }

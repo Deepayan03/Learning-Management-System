@@ -1,4 +1,4 @@
-import User from "../models/userModels.js";
+import user from "../models/userModels.js";
 import AppError from "../utils/utilError.js";
 import sendEmail from "../utils/sendEmail.js";
 
@@ -29,10 +29,11 @@ export const contactUs = async (req, res, next) => {
 };
 
 export const userStats = async (req, res, next) => {
-  const allUsersCount = await User.countDocuments();
+ try {
+  const allUsersCount = await user.countDocuments();
 
-  const subscribedUsersCount = await User.countDocuments({
-    "subscription.status": "active", // subscription.status means we are going inside an object and we have to put this in quotes
+  const subscribedUsersCount = await user.countDocuments({
+    "subscription.status": "ACTIVE", // subscription.status means we are going inside an object and we have to put this in quotes
   });
 
   res.status(200).json({
@@ -41,4 +42,7 @@ export const userStats = async (req, res, next) => {
     allUsersCount,
     subscribedUsersCount,
   });
+ } catch (error) {
+    return next(new AppError("Couldnot fetch the user stats",400));
+ }
 };

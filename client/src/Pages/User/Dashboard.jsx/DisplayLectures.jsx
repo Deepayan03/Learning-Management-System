@@ -71,7 +71,7 @@ const DisplayLectures = () => {
             </div>
 
             {/* right section for displaying all the lectures of the course */}
-            <ul className="w-[28rem] h-auto p-2 h-[25rem] rounded-lg shadow-[0_0_10px_black] space-y-4 overflow-y-auto ">
+            <ul className="w-[28rem]  p-2 h-[25rem] rounded-lg shadow-[0_0_10px_black] space-y-4 overflow-y-auto ">
               <li className="font-semibold text-xl text-yellow-500 flex items-center justify-between">
                 <p>Lectures List</p>
                 {role === "ADMIN" && (

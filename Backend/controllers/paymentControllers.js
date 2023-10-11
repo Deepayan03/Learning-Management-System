@@ -83,8 +83,8 @@ const verifySubscription = async (req, res, next) => {
       return next(new AppError("Payment not verified", 500));
     }
     await Payment.create({
-      payment_id:razorpay_payment_id,
-      subscription_id:razorpay_subscription_id,
+      payment_id: razorpay_payment_id,
+      subscription_id: razorpay_subscription_id,
       signature: razorpay_signature,
     });
 
@@ -142,11 +142,62 @@ const allPayments = async (req, res, next) => {
     const subscriptions = await razorpay.subscriptions.all({
       count: count || 10,
     });
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
 
+    const finalMonths = {
+      January: 0,
+      February: 0,
+      March: 0,
+      April: 0,
+      May: 0,
+      June: 0,
+      July: 0,
+      August: 0,
+      September: 0,
+      October: 0,
+      November: 0,
+      December: 0,
+    };
+
+    const monthlyWisePayments = subscriptions.items.map((payment) => {
+      // We are using payment.start_at which is in unix time, so we are converting it to Human readable format using Date()
+      const monthsInNumbers = new Date(payment.start_at * 1000);
+
+      return monthNames[monthsInNumbers.getMonth()];
+    });
+
+    monthlyWisePayments.map((month) => {
+      Object.keys(finalMonths).forEach((objMonth) => {
+        if (month === objMonth) {
+          finalMonths[month] += 1;
+        }
+      });
+    });
+
+    const monthlySalesRecord = [];
+
+    Object.keys(finalMonths).forEach((monthName) => {
+      monthlySalesRecord.push(finalMonths[monthName]);
+    });
+    console.log(monthlySalesRecord);
     res.status(200).json({
       success: true,
       message: "Here's the records you have requested...",
       data: subscriptions,
+      monthlySalesRecord: monthlySalesRecord,
     });
   } catch (error) {
     console.log(error);

@@ -17,6 +17,7 @@ import Success from "./Pages/Payments/Success";
 import Failure from "./Pages/Payments/Failure";
 import DisplayLectures from "./Pages/User/Dashboard.jsx/DisplayLectures";
 import AddLecture from "./Pages/User/Dashboard.jsx/AddLecture";
+import AdminDashboard from "./Pages/User/Dashboard.jsx/AdminDashboard";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
       <Route element={<Authorize allowedRoles={["ADMIN"]} />}>
         <Route path="/course/create" element={<CreateCourse />}></Route>
         <Route path="/course/addlecture" element={<AddLecture />}></Route>
+        <Route path="/admin/dashboard" element={<AdminDashboard />}></Route>
       </Route>
       {/* Profile Route  Accessible for both normal users and admin*/}
       <Route element={<Authorize allowedRoles={["ADMIN", "USER"]} />}>

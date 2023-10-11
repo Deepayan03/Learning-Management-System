@@ -42,7 +42,7 @@ app.use("/courses", courseRoutes);
 app.use("/payments", paymentRoutes);
 app.use("/misc", miscRoutes);
 // Defined a custom middleware for throwing error
-app.use(errorMiddleWare);
+// app.use(errorMiddleWare);
 // If someone hits on the same port but wrong url then this error will be thrown
 app.all("*", (req, res) => {
   res.status(404).json({
