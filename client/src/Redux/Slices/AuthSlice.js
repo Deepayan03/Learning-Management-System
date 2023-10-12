@@ -107,6 +107,21 @@ export const resetPassword = createAsyncThunk("/user/resetPassword" , async (dat
     toast.error(error?.response?.data?.message);
   }
 });
+export const changePassword = createAsyncThunk("/user/changePassword" , async (data)=>{
+  try {
+    const {oldPassword , newPassword} = data;
+    const response =  axiosInstance.post("/user/changePassword/",{oldPassword , newPassword});
+    toast.promise(response,{
+      success: "Password changed successfully",
+      loading : "Changing your password....",
+    })
+    const res = await response;
+    return res?.data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message);
+    console.log(error);
+  }
+});
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -142,6 +157,8 @@ const authSlice = createSlice({
         localStorage.setItem("role", action?.payload?.data?.role);
         state.isLoggedIn = true;
         state.data = action?.payload?.data;
+      }).addCase(changePassword.fulfilled,(state , action) =>{
+        return action?.payload;
       });
   },
 });

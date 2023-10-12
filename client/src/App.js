@@ -20,6 +20,7 @@ import AddLecture from "./Pages/User/Dashboard.jsx/AddLecture";
 import AdminDashboard from "./Pages/User/Dashboard.jsx/AdminDashboard";
 import ForgotPassword from "./Pages/ForgotPassword";
 import ResetPassword from "./Pages/ResetPassword";
+import ChangePassword from "./Pages/ChangePassword";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
       <Route path="/login" element={<Login />}></Route>
       <Route path="/forgotpassword" element={<ForgotPassword />}></Route>
       <Route path="/resetPassword/:token" element={<ResetPassword />}></Route>
+      <Route path="/changePassword" element={<ChangePassword />}></Route>
       <Route path="/courses" element={<CourseList />}></Route>
       <Route path="/contact" element={<ContactUs />}></Route>
       <Route path="/denied" element={<Denied />}></Route>
