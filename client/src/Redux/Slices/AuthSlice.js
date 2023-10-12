@@ -86,6 +86,27 @@ export const getUserData = createAsyncThunk("/user/get", async () => {
   }
 });
 
+export const forgotPassword = createAsyncThunk("/user/forgotPassword" , async(email)=>{
+  try {
+    const response = await axiosInstance.post("/user/forgotPassword",{email});
+    console.log(response);
+    return response?.data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message);
+  }
+});
+
+export const resetPassword = createAsyncThunk("/user/resetPassword" , async (data)=>{
+  try {
+    const [password , token] = data;
+    const response = await axiosInstance.post(`/user/resetPassword/${token}`,{password});
+    console.log(response);
+    toast.success("Password Changed successfully")
+    return response?.data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message);
+  }
+});
 const authSlice = createSlice({
   name: "auth",
   initialState,

@@ -146,14 +146,14 @@ const forgotPassword = async (req, res, next) => {
   }
   const resetToken = await emailExists.generatePasswordResetToken();
   await emailExists.save();
-  const resetPasswordURL = `${process.env.FrontEndURL}/user/resetPassword/${resetToken}`;
-  const subject = "reset password";
-  const message = `You can reset your password by clicking <a href=${resetPasswordURL} target="_blank">Reset your password</a>\nIf the above link does not work for some reason then copy paste this link in new tab${resetPasswordURL}.\n If you have not requested this, kindly ignore.`;
+  const resetPasswordURL = `${process.env.FRONTEND_URL}/resetPassword/${resetToken}`;
+  const subject = "Reset password";
+  const message = `You can reset your password by clicking <a href=${resetPasswordURL} target="_blank">Reset your password</a> \n If the above link does not work for some reason then copy paste this link in new tab${resetPasswordURL}.\n If you have not requested this, kindly ignore.`;
   try {
     await sendEmail(email, subject, message);
-    res.status(400).json({
+    res.status(200).json({
       success: true,
-      message: "Reset password link has been successfully",
+      message: "Reset password link has been successfully sent",
     });
   } catch (e) {
     user.forgotPasswordExpiry = undefined;
@@ -166,7 +166,7 @@ const forgotPassword = async (req, res, next) => {
 const resetPassword = async (req, res, next) => {
   const { resetToken } = req.params;
   const { password } = req.body;
-  // console.log(resetToken,password);
+  console.log(resetToken, password);
   const forgotPasswordToken = crypto
     .createHash("sha256")
     .update(resetToken)

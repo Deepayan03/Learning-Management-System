@@ -18,6 +18,8 @@ import Failure from "./Pages/Payments/Failure";
 import DisplayLectures from "./Pages/User/Dashboard.jsx/DisplayLectures";
 import AddLecture from "./Pages/User/Dashboard.jsx/AddLecture";
 import AdminDashboard from "./Pages/User/Dashboard.jsx/AdminDashboard";
+import ForgotPassword from "./Pages/ForgotPassword";
+import ResetPassword from "./Pages/ResetPassword";
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
       <Route path="/about" element={<AboutUs />}></Route>
       <Route path="/signUp" element={<SignUp />}></Route>
       <Route path="/login" element={<Login />}></Route>
+      <Route path="/forgotpassword" element={<ForgotPassword />}></Route>
+      <Route path="/resetPassword/:token" element={<ResetPassword />}></Route>
       <Route path="/courses" element={<CourseList />}></Route>
       <Route path="/contact" element={<ContactUs />}></Route>
       <Route path="/denied" element={<Denied />}></Route>

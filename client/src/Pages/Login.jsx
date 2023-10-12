@@ -22,7 +22,7 @@ const Login = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    const {email , password} = loginData;
+    const { email, password } = loginData;
     // checking the empty fields
     if (!email || !password) {
       toast.error("Please fill all the fields");
@@ -86,6 +86,12 @@ const Login = () => {
               Register
             </Link>
           </p>
+
+          <Link
+            to="/forgotpassword"
+            className=" link text-accent cursor-pointer hover:text-blue-700">
+            <p className="text-center">Forgot your password ?</p>
+          </Link>
         </form>
       </div>
     </HomeLayout>
